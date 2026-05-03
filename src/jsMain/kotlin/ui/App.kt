@@ -1,12 +1,15 @@
 package ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import game.GameConfig
 import game.GameLogic
+import game.GameState
+import game.Storage
 import org.jetbrains.compose.web.attributes.AttrsScope
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
@@ -16,7 +19,13 @@ import org.w3c.dom.HTMLDivElement
 
 @Composable
 fun App() {
-    var state by remember { mutableStateOf(GameLogic.newGame(GameConfig())) }
+    var state by remember {
+        mutableStateOf(Storage.load() ?: GameLogic.newGame(GameConfig()))
+    }
+
+    // SideEffect runs after a successful frame — good enough for a localStorage write,
+    // and avoids pulling kotlinx-coroutines in just to satisfy LaunchedEffect's receiver.
+    SideEffect { Storage.save(state) }
 
     Div(attrs = { classes("app") }) {
         H1 { Text("Connect Four") }
@@ -30,7 +39,9 @@ fun App() {
 
         GameBoard(
             state = state,
-            onColumnClick = { col -> GameLogic.dropPiece(state, col)?.let { state = it } },
+            onColumnClick = { col ->
+                GameLogic.dropPiece(state, col)?.let { state = it }
+            },
         )
 
         Div(attrs = { classes("actions") }) {
