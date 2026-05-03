@@ -20,8 +20,18 @@ fun App() {
 
     Div(attrs = { classes("app") }) {
         H1 { Text("Connect Four") }
+
+        SettingsPanel(
+            config = state.config,
+            onConfigChange = { newConfig -> state = GameLogic.newGame(newConfig) },
+        )
+
         GameStatus(state)
-        GameBoard(state) { col -> GameLogic.dropPiece(state, col)?.let { state = it } }
+
+        GameBoard(
+            state = state,
+            onColumnClick = { col -> GameLogic.dropPiece(state, col)?.let { state = it } },
+        )
 
         Div(attrs = { classes("actions") }) {
             Button(attrs = {
