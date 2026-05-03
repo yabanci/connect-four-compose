@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CHROME_BIN: /usr/bin/chromium
+      CHROME_BIN: /usr/bin/google-chrome
 
     steps:
       - uses: actions/checkout@v4
