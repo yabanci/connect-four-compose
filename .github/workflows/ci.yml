@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      CHROME_BIN: /usr/bin/chromium
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Compile
+        run: ./gradlew compileKotlinJs --no-daemon
+
+      - name: Unit tests
+        run: ./gradlew jsTest --no-daemon
+
+      - name: Build production bundle
+        run: ./gradlew jsBrowserDistribution --no-daemon
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: connect-four-dist
+          path: build/dist/js/productionExecutable/
+          if-no-files-found: error
