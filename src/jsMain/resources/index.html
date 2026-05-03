@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Four</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            color: #1e293b;
+        }
+
+        .app {
+            max-width: 720px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 20px;
+        }
+
+        .board {
+            background: #1e3a8a;
+            padding: 8px;
+            border-radius: 10px;
+            display: grid;
+            gap: 4px;
+            user-select: none;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .column:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background: #0f172a;
+            border-radius: 50%;
+            position: relative;
+            min-width: 0;
+        }
+
+        .piece {
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+        }
+
+        .piece.red { background: radial-gradient(circle at 30% 30%, #fca5a5, #dc2626); }
+        .piece.yellow { background: radial-gradient(circle at 30% 30%, #fef08a, #eab308); }
+
+        .status {
+            text-align: center;
+            padding: 12px;
+            margin-bottom: 16px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .primary-btn {
+            display: block;
+            margin: 16px auto 0;
+            padding: 10px 24px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="connect-four.js"></script>
+</body>
+</html>
