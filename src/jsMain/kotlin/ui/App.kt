@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import game.GameConfig
 import game.GameLogic
 import org.jetbrains.compose.web.attributes.AttrsScope
+import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
@@ -19,7 +20,15 @@ fun App() {
 
     Div(attrs = { classes("app") }) {
         H1 { Text("Connect Four") }
+        GameStatus(state)
         GameBoard(state) { col -> GameLogic.dropPiece(state, col)?.let { state = it } }
+
+        Div(attrs = { classes("actions") }) {
+            Button(attrs = {
+                classes("primary-btn")
+                onClick { state = GameLogic.newGame(state.config) }
+            }) { Text("New Game") }
+        }
     }
 }
 
