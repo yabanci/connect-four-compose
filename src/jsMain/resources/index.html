@@ -129,6 +129,9 @@
             gap: 4px;
             user-select: none;
             box-shadow: 0 8px 16px -4px rgba(30, 58, 138, 0.4);
+            /* Wide boards scroll horizontally instead of squashing cells */
+            overflow-x: auto;
+            max-width: 100%;
         }
 
         .column {
@@ -139,6 +142,8 @@
             transition: background 0.15s;
             border-radius: 6px;
             padding: 2px;
+            /* tap-target floor — pairs with grid-template-columns minmax(44px, 1fr) */
+            min-width: 44px;
         }
 
         .column:not(.disabled):hover {
@@ -164,7 +169,10 @@
             inset: 4px;
             border-radius: 50%;
             animation: drop 0.45s cubic-bezier(0.5, 0.05, 0.55, 0.95);
-            box-shadow: inset -2px -3px 4px rgba(0, 0, 0, 0.25);
+            /* Inner depth + 1px outer ring so pieces stay distinguishable on small cells */
+            box-shadow:
+                inset -2px -3px 4px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.18);
         }
 
         .piece.red {

@@ -10,9 +10,11 @@ import org.jetbrains.compose.web.dom.Div
 @Composable
 fun GameBoard(state: GameState, onColumnClick: (Int) -> Unit) {
     val cfg = state.config
+    // minmax(44px, 1fr) keeps every column at a tap-friendly minimum (Apple/Google HIG)
+    // and lets .board overflow-x: auto when cols are too many to fit width.
     Div(attrs = {
         classes("board")
-        style { gridTemplateColumns("repeat(${cfg.cols}, 1fr)") }
+        style { gridTemplateColumns("repeat(${cfg.cols}, minmax(44px, 1fr))") }
     }) {
         for (col in 0 until cfg.cols) {
             ColumnView(state, col, onClick = { onColumnClick(col) })
